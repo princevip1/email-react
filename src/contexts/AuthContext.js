@@ -16,7 +16,7 @@ export default function AuthContextProvider({ children }) {
     setIsLoading(true);
     try {
       const result = await axios.post(
-        `http://localhost:8080/api/v1/auth/login`,
+        `http://192.168.0.101:8080/api/v1/auth/login`,
         data
       );
       const { token, user } = result.data;
