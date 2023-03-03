@@ -11,8 +11,6 @@ import {
   Row,
   Space,
   Table,
-  message,
-  Upload,
   Dropdown,
   Menu,
   Tooltip,
@@ -21,7 +19,6 @@ import {
   CloseCircleOutlined,
   DeleteOutlined,
   DownOutlined,
-  InboxOutlined,
   PlusCircleOutlined,
   RetweetOutlined,
   RightCircleOutlined,
@@ -30,13 +27,33 @@ import {
 import { ProxyContext } from "@/contexts/ProxyContext";
 
 const Proxy = () => {
-  const { getProxy, isProxyLoading, addProxy, proxy, deleteProxy } =
-    useContext(ProxyContext);
+  const {
+    getProxy,
+    isProxyLoading,
+    addProxy,
+    proxy,
+    deleteProxy,
+    addMoreProxy,
+  } = useContext(ProxyContext);
   const [form] = Form.useForm();
+  const [form2] = Form.useForm();
   const [openModal, setOpenModal] = useState(false);
+  const [addMoreModal, setAddMoreModal] = useState(false);
+  const [proxyId, setProxyId] = useState(null);
 
   const onFinish = (values) => {
     addProxy(values, setOpenModal);
+  };
+
+  const onFinish2 = (values) => {
+    addMoreProxy(
+      {
+        ...values,
+        id: proxyId,
+      },
+      form2,
+      setAddMoreModal
+    );
   };
 
   useEffect(() => {
@@ -72,12 +89,29 @@ const Proxy = () => {
           overlay={
             <Menu>
               <Menu.Item>
+                <Tooltip title="Add More">
+                  <Button
+                    onClick={() => {
+                      setProxyId(record._id);
+                      setAddMoreModal(true);
+                    }}
+                    style={{ width: "100%", textAlign: "left" }}
+                    type="text"
+                    size="small"
+                    icon={<PlusCircleOutlined />}
+                  >
+                    Add More
+                  </Button>
+                </Tooltip>
+              </Menu.Item>
+              <Menu.Item>
                 <Tooltip title="Delete">
                   <Popconfirm
                     title="Are you sure？"
                     onConfirm={() => deleteProxy(record._id)}
                   >
                     <Button
+                      style={{ width: "100%", textAlign: "left" }}
                       type="text"
                       size="small"
                       danger
@@ -140,7 +174,10 @@ const Proxy = () => {
 
       <Modal
         open={openModal}
-        onCancel={() => setOpenModal(false)}
+        onCancel={() => {
+          setOpenModal(false);
+          form.resetFields();
+        }}
         title={"Add Proxy Group"}
         footer={null}
         width={600}
@@ -158,7 +195,7 @@ const Proxy = () => {
                   },
                 ]}
               >
-                <Input placeholder="Contact Group Name" />
+                <Input placeholder="Proxy Group Name" />
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -189,7 +226,74 @@ const Proxy = () => {
             <Button
               loading={isProxyLoading}
               disabled={isProxyLoading}
-              onClick={() => setOpenModal(false)}
+              onClick={() => {
+                setOpenModal(false);
+                form.resetFields();
+              }}
+              icon={<CloseCircleOutlined />}
+              danger
+            >
+              Cancel
+            </Button>
+            <Button
+              loading={isProxyLoading}
+              disabled={isProxyLoading}
+              htmlType="submit"
+              icon={<RightCircleOutlined />}
+              type="primary"
+            >
+              Submit
+            </Button>
+          </Space>
+        </Form>
+      </Modal>
+
+      <Modal
+        open={addMoreModal}
+        onCancel={() => {
+          setAddMoreModal(false);
+          form2.resetFields();
+          setProxyId(null);
+        }}
+        title={"More Add Proxy "}
+        footer={null}
+        width={600}
+      >
+        <Form layout="vertical" form={form2} onFinish={onFinish2}>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Form.Item
+                label={"Proxies"}
+                name="proxies"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Contacts",
+                  },
+                ]}
+              >
+                <Input.TextArea
+                  placeholder="Enter Proxies"
+                  autoSize={{ minRows: 10, maxRows: 30 }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Space
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: 16,
+            }}
+          >
+            <Button
+              loading={isProxyLoading}
+              disabled={isProxyLoading}
+              onClick={() => {
+                setAddMoreModal(false);
+                form2.resetFields();
+                setProxyId(null);
+              }}
               icon={<CloseCircleOutlined />}
               danger
             >

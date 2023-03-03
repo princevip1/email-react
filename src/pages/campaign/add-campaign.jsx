@@ -97,8 +97,9 @@ const AddCampaign = () => {
                 placeholder="Select Contact"
                 options={contacts?.map((item) => {
                   return {
-                    value: item._id,
-                    label: item.name,
+                    value: item?._id,
+                    label: item?.name,
+                    disabled: item?.disable,
                   };
                 })}
               />
@@ -117,8 +118,9 @@ const AddCampaign = () => {
                 options={
                   smtps?.map((item) => {
                     return {
-                      value: item._id,
-                      label: item.name,
+                      value: item?._id,
+                      label: item?.name,
+                      disabled: item?.disable,
                     };
                   }) || []
                 }
@@ -143,77 +145,37 @@ const AddCampaign = () => {
             </Form.Item>
           </Col>
 
-          <Divider orientation="left">Campaign Control</Divider>
+          <Divider orientation="left">Proxy Control</Divider>
 
-          <Space>
-            <Col span={24}>
-              <Form.Item
-                label="Body"
-                name="body"
-                rules={[
+          <Col span={8}>
+            <Form.Item
+              label="Are you using proxy"
+              name="proxy"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your sender name!",
+                },
+              ]}
+            >
+              <Select
+                style={{
+                  width: "100%",
+                }}
+                placeholder="Select Proxy"
+                options={[
                   {
-                    required: false,
-                    message: "Please input your sender name!",
+                    value: true,
+                    label: "Yes",
+                  },
+                  {
+                    value: false,
+                    label: "No",
                   },
                 ]}
-              >
-                <Switch
-                  onChange={(value) => {
-                    setIsBody(value);
-                  }}
-                  checked={isBody}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label="Pdf"
-                name="pdf"
-                rules={[
-                  {
-                    required: false,
-                    message: "Please input your sender name!",
-                  },
-                ]}
-              >
-                <Switch />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label="Inline Image"
-                name="inlineImage"
-                rules={[
-                  {
-                    required: false,
-                    message: "Please input your sender name!",
-                  },
-                ]}
-              >
-                <Switch
-                  disabled={isBody}
-                  onChange={(value) => {
-                    setIsInlineImage(value);
-                  }}
-                  checked={!isBody}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label="Proxy"
-                name="proxy"
-                rules={[
-                  {
-                    required: false,
-                    message: "Please input your sender name!",
-                  },
-                ]}
-              >
-                <Switch />
-              </Form.Item>
-            </Col>
-          </Space>
+              />
+            </Form.Item>
+          </Col>
         </Row>
         <Space
           style={{

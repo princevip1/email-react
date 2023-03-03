@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Fetch = axios.create({
-  baseURL: "http://192.168.0.101:8080/api/v1",
+  baseURL: "http://192.168.0.150:8080/api/v1",
 });
 
 Fetch.interceptors.request.use(async (req) => {

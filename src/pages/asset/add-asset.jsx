@@ -1,57 +1,34 @@
 import { AssetContext } from "@/contexts/AssetContext";
 import Layouts from "@/layouts/index";
 import {
+  ExclamationCircleOutlined,
   InboxOutlined,
-  PlusOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Col, Form, Input, Row, Space, Upload } from "antd";
-import React, { useContext, useState } from "react";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Row,
+  Space,
+  Typography,
+  Upload,
+} from "antd";
+import React, { useContext } from "react";
 
 const { Dragger } = Upload;
-
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 
 const AddAsset = () => {
   const { addAsset, isAssetLoading } = useContext(AssetContext);
   const [form] = Form.useForm();
 
-  const [fileList, setFileList] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
-
   const onFinish = (values) => {
     addAsset({
       ...values,
-      images: imageUrls,
     });
-  };
-
-  const handleChange = async (file) => {
-    setFileList(file.fileList);
-    if (file.file.status === "done") {
-      const url = await getBase64(file.file.originFileObj);
-      file.file.url = url;
-      setImageUrls((imageUrls) => [...imageUrls, file.file.url]);
-    }
   };
 
   return (
@@ -136,26 +113,68 @@ const AddAsset = () => {
               </Dragger>
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              label={"Image"}
-              name="images"
-              rules={[
-                {
-                  required: true,
-                  message: "Please Enter Contacts",
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                onChange={handleChange}
-                maxCount={10}
-                multiple={true}
+          <Col
+            span={12}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: 16,
+              paddingLeft: 16,
+            }}
+          >
+            <Typography.Text>{"Auto Generated Variable "}</Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
               >
-                {fileList.length >= 10 ? null : uploadButton}
-              </Upload>
-            </Form.Item>
+                {"{{random_number(0)}}"}
+              </strong>
+              {" Use this for Generate Number(1-9) Only"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{{ab(0)}}"}
+              </strong>
+              {
+                " Use this variable for generate random Alphabet A to Z (1-9) Only "
+              }
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{{recipient_email}} "}
+              </strong>
+              {"Use this variable for Recipient Email Replace"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{{recipient_name}}"}
+              </strong>
+              {"  Use this variable for Recipient Name Replace"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{{date}}"}
+              </strong>
+              {" Use this variable for Today Date"}
+            </Typography.Text>
           </Col>
         </Row>
         <Space

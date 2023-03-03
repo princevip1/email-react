@@ -31,15 +31,17 @@ const Assets = () => {
 
   const columns = [
     {
+      title: "Sl",
+      dataIndex: "sl",
+      key: "sl",
+      render: (_, record, index) => (
+        <Typography.Text>{index + 1}</Typography.Text>
+      ),
+    },
+    {
       title: "Name",
       dataIndex: "name",
       key: "name",
-    },
-    {
-      title: "Image",
-      dataIndex: "images",
-      key: "images",
-      render: (images) => <Typography.Text>{images?.length}</Typography.Text>,
     },
     {
       title: "Pdf",
@@ -58,7 +60,12 @@ const Assets = () => {
               <Menu.Item>
                 <Tooltip title="Edit">
                   <Link href={`/asset/edit/${record._id}`}>
-                    <Button icon={<EditOutlined />} type="ghost" size="small">
+                    <Button
+                      style={{ width: "100%", textAlign: "left" }}
+                      icon={<EditOutlined />}
+                      type="ghost"
+                      size="small"
+                    >
                       Edit
                     </Button>
                   </Link>
@@ -72,6 +79,7 @@ const Assets = () => {
                     onConfirm={() => deleteAsset(record._id)}
                   >
                     <Button
+                      style={{ width: "100%", textAlign: "left" }}
                       type="text"
                       size="small"
                       danger

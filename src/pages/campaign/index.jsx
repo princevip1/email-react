@@ -30,6 +30,7 @@ const Campaign = () => {
     isCampaignLoading,
     deleteCampaign,
     updateCampaignStatus,
+    deleteRestCampaign,
   } = useContext(CamapignContext);
 
   useEffect(() => {
@@ -37,6 +38,14 @@ const Campaign = () => {
   }, []);
 
   const columns = [
+    {
+      title: "Sl",
+      dataIndex: "sl",
+      key: "sl",
+      render: (text, record, index) => {
+        return index + 1;
+      },
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -153,6 +162,7 @@ const Campaign = () => {
                     onConfirm={() => deleteCampaign(record?._id)}
                   >
                     <Button
+                      disabled={record?.status === "active"}
                       type="text"
                       size="small"
                       danger
@@ -185,9 +195,17 @@ const Campaign = () => {
       title="Campaign"
       extra={
         <Space>
-          <Button size="small" danger icon={<DeleteOutlined />}>
-            Delete All
-          </Button>
+          <Popconfirm
+            title="Are you sure？"
+            onConfirm={() => {
+              deleteRestCampaign();
+            }}
+          >
+            <Button size="small" danger icon={<DeleteOutlined />}>
+              Delete All
+            </Button>
+          </Popconfirm>
+
           <Button
             disabled={isCampaignLoading}
             loading={isCampaignLoading}
@@ -199,6 +217,7 @@ const Campaign = () => {
           >
             Reload
           </Button>
+
           <Link href="/campaign/add-campaign">
             <Button icon={<PlusCircleOutlined />} type="primary" size="small">
               Add Campaign

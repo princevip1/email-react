@@ -90,6 +90,21 @@ export default function CamapignContextProvider({ children }) {
     }
   };
 
+  const deleteRestCampaign = async () => {
+    setIsCampaignLoading(true);
+    try {
+      const result = await Fetch.delete(`${API.campaign}/delete/RestCampaign`);
+      console.log("result", result);
+      NotoficationHandler(result?.data);
+      setIsCampaignLoading(false);
+      getCampaign();
+    } catch (e) {
+      getCampaign();
+      setIsCampaignLoading(false);
+      NotoficationHandler(e?.response?.data, "error");
+    }
+  };
+
   return (
     <CamapignContext.Provider
       value={{
@@ -102,6 +117,7 @@ export default function CamapignContextProvider({ children }) {
         campaignById,
         updateCampaign,
         updateCampaignStatus,
+        deleteRestCampaign,
       }}
     >
       {children}

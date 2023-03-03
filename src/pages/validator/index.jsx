@@ -1,44 +1,68 @@
+import { ValidatorContactContaxt } from "@/contexts/ValidatorContactContaxt copy";
 import Layouts from "@/layouts/index";
 import {
-  ArrowRightOutlined,
+  CloseCircleOutlined,
   DeleteOutlined,
   DownloadOutlined,
   DownOutlined,
+  InboxOutlined,
   InfoCircleOutlined,
   PlusCircleOutlined,
   RightCircleOutlined,
-  SmileOutlined,
 } from "@ant-design/icons";
 import {
   Button,
   Card,
+  Col,
   Dropdown,
+  Form,
+  Input,
   Menu,
+  Modal,
   Popconfirm,
+  Row,
   Space,
   Table,
+  Tag,
   Tooltip,
-  Typography,
+  Upload,
 } from "antd";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+const { Dragger } = Upload;
 
 const Validator = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+  const {
+    getContact,
+    isValidatorContactLoading,
+    addContact,
+    validatorContacts,
+    deleteContact,
+    updateStatus,
+  } = useContext(ValidatorContactContaxt);
+  const [form] = Form.useForm();
+  const [openModal, setOpenModal] = useState(false);
+
+  const onFinish = (values) => {
+    addContact(
+      {
+        ...values,
+      },
+      setOpenModal,
+      form
+    );
+  };
+
+  useEffect(() => {
+    getContact();
+  }, []);
 
   const columns = [
+    {
+      title: "Sl",
+      dataIndex: "sl",
+      key: "sl",
+      render: (text, record, index) => index + 1,
+    },
     {
       title: "Contact Group",
       dataIndex: "name",
@@ -46,42 +70,62 @@ const Validator = () => {
     },
     {
       title: "Total Contact",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "count",
+      key: "count",
     },
     {
       title: "Valid Contact",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "validCount",
+      key: "validCount",
     },
     {
       title: "Invalid Contact",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "invalidCount",
+      key: "invalidCount",
+    },
+    {
+      title: "Pending Contact",
+      dataIndex: "notValidateCount",
+      key: "notValidateCount",
     },
     {
       title: "Status",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+        <Tag
+          color={
+            status === "active"
+              ? "green"
+              : status === "pending"
+              ? "orange"
+              : "red"
+          }
+        >
+          {status}
+        </Tag>
+      ),
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <Dropdown
           overlay={
             <Menu>
               <Menu.Item>
                 <Tooltip title="Start Validator">
                   <Popconfirm
-                    title="Are you sure? Delete this item "
-                    onConfirm={() => console.log("first")}
+                    title="Are you sure? "
+                    onConfirm={() => {
+                      updateStatus({
+                        id: record._id,
+                        status: "active",
+                      });
+                    }}
                   >
                     <Button
-                      onClick={() => {
-                        console.log("first");
-                      }}
                       type="ghost"
                       size="small"
                       icon={<RightCircleOutlined />}
@@ -92,15 +136,17 @@ const Validator = () => {
                 </Tooltip>
               </Menu.Item>
               <Menu.Item>
-                <Tooltip title="Start Validator">
+                <Tooltip title="Paused Validator">
                   <Popconfirm
                     title="Are you sure？"
-                    onConfirm={() => console.log("first")}
+                    onConfirm={() => {
+                      updateStatus({
+                        id: record._id,
+                        status: "pasued",
+                      });
+                    }}
                   >
                     <Button
-                      onClick={() => {
-                        console.log("first");
-                      }}
                       type="text"
                       size="small"
                       danger
@@ -134,12 +180,11 @@ const Validator = () => {
                 <Tooltip title="Start Validator">
                   <Popconfirm
                     title="Are you sure？"
-                    onConfirm={() => console.log("first")}
+                    onConfirm={() => {
+                      deleteContact(record._id);
+                    }}
                   >
                     <Button
-                      onClick={() => {
-                        console.log("first");
-                      }}
                       type="text"
                       size="small"
                       danger
@@ -167,16 +212,111 @@ const Validator = () => {
       ),
     },
   ];
+
+  const props = {
+    multiple: false,
+    customRequest({ file, onSuccess }) {
+      onSuccess("success", file);
+    },
+  };
   return (
     <Card
       title="Mail Validator"
       extra={
-        <Button size="small" type="primary" icon={<PlusCircleOutlined />}>
+        <Button
+          onClick={() => {
+            setOpenModal(true);
+          }}
+          size="small"
+          type="primary"
+          icon={<PlusCircleOutlined />}
+        >
           Add New
         </Button>
       }
     >
-      <Table dataSource={dataSource} columns={columns} />;
+      <Table dataSource={validatorContacts} columns={columns} />
+
+      <Modal
+        title="Add New Validator"
+        open={openModal}
+        onCancel={() => {
+          setOpenModal(false);
+          form.resetFields();
+        }}
+        footer={null}
+      >
+        <Form layout="vertical" form={form} onFinish={onFinish}>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Form.Item
+                label={"Validation Contact Group Name"}
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Group Name",
+                  },
+                ]}
+              >
+                <Input placeholder="Validation Contact Group Name" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                label={"Validation Contacts"}
+                name="files"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Contacts",
+                  },
+                ]}
+              >
+                <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                  <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                  </p>
+                  <p className="ant-upload-text">
+                    Click or drag file to this area to upload
+                  </p>
+                  <p className="ant-upload-hint">
+                    Support for a single or bulk upload.
+                  </p>
+                </Dragger>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Space
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: 16,
+            }}
+          >
+            <Button
+              disabled={isValidatorContactLoading}
+              onClick={() => {
+                setOpenModal(false);
+                form.resetFields();
+              }}
+              icon={<CloseCircleOutlined />}
+              danger
+            >
+              Cancel
+            </Button>
+            <Button
+              loading={isValidatorContactLoading}
+              disabled={isValidatorContactLoading}
+              htmlType="submit"
+              icon={<RightCircleOutlined />}
+              type="primary"
+            >
+              Submit
+            </Button>
+          </Space>
+        </Form>
+      </Modal>
     </Card>
   );
 };

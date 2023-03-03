@@ -44,7 +44,24 @@ export default function ProxyContextProvider({ children }) {
       setProxyLoading(false);
       NotoficationHandler(result.data);
     } catch (e) {
-      console.log(e?.response?.data);
+      getProxy();
+      setProxyLoading(false);
+      NotoficationHandler(e?.response?.data, "error");
+    }
+  };
+
+  const addMoreProxy = async (data, form2 = null, setAddMoreModal = false) => {
+    setProxyLoading(true);
+    try {
+      const result = await Fetch.put(API.proxy + "/addmore/" + data.id, data);
+      setProxyLoading(false);
+      setAddMoreModal(false);
+      form2.resetFields();
+      NotoficationHandler(result?.data);
+      getProxy();
+    } catch (e) {
+      setAddMoreModal(false);
+      form2.resetFields();
       setProxyLoading(false);
       NotoficationHandler(e?.response?.data, "error");
     }
@@ -52,7 +69,14 @@ export default function ProxyContextProvider({ children }) {
 
   return (
     <ProxyContext.Provider
-      value={{ getProxy, isProxyLoading, addProxy, proxy, deleteProxy }}
+      value={{
+        getProxy,
+        isProxyLoading,
+        addProxy,
+        proxy,
+        deleteProxy,
+        addMoreProxy,
+      }}
     >
       {children}
     </ProxyContext.Provider>

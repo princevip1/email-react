@@ -8,4 +8,5 @@ export const API = {
   campaign: "/campaign",
   updateCampaignStatus: "/campaign/status",
   emailTest: "/email/test",
+  validator: "/validator",
 };

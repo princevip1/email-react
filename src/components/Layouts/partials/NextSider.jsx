@@ -15,7 +15,7 @@ export default function NextSider({ collapsed }) {
       collapsible
       collapsed={collapsed}
     >
-      <div
+      {/* <div
         style={{
           height: 64,
           display: "flex",
@@ -26,14 +26,14 @@ export default function NextSider({ collapsed }) {
         <Typography.Title level={2}>
           <span style={{ color: "#1890ff" }}>e</span> {collapsed ? "" : "Mail"}
         </Typography.Title>
-      </div>
-      {/* <Image
+      </div> */}
+      <Image
         width={200}
-        src="https://logos-world.net/wp-content/uploads/2022/05/Zoho-Mail-Logo.png"
+        src="/logo.png"
         alt="logo"
-        style={{ marginBottom: 20 }}
+        style={{ marginBottom: 10 }}
         preview={false}
-      /> */}
+      />
       <NextMenu collapsed={collapsed} />
       {/* <Menu
         theme="light"

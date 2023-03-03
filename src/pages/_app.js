@@ -5,6 +5,7 @@ import ContactContaxtProvider from "@/contexts/ContactContaxt";
 import ProxyContextProvider from "@/contexts/ProxyContext";
 import SmtpContaxtProvider from "@/contexts/SmtpContext";
 import TestMailContaxtProvider from "@/contexts/TestMailContext";
+import ValidatorContactContaxtProvider from "@/contexts/ValidatorContactContaxt copy";
 import "@/styles/globals.css";
 import ThemeProvider from "@/themes/ThemeProvider";
 import "antd/dist/reset.css";
@@ -14,21 +15,23 @@ export default function App({ Component, pageProps }) {
     <>
       <ThemeProvider>
         <AuthContextProvider>
-          <SmtpContaxtProvider>
-            <ProxyContextProvider>
-              <AssetContextProvider>
-                <CamapignContextProvider>
-                  <TestMailContaxtProvider>
-                    <ContactContaxtProvider>
-                      <CustomLayout>
-                        <Component {...pageProps} />
-                      </CustomLayout>
-                    </ContactContaxtProvider>
-                  </TestMailContaxtProvider>
-                </CamapignContextProvider>
-              </AssetContextProvider>
-            </ProxyContextProvider>
-          </SmtpContaxtProvider>
+          <ValidatorContactContaxtProvider>
+            <SmtpContaxtProvider>
+              <ProxyContextProvider>
+                <AssetContextProvider>
+                  <CamapignContextProvider>
+                    <TestMailContaxtProvider>
+                      <ContactContaxtProvider>
+                        <CustomLayout>
+                          <Component {...pageProps} />
+                        </CustomLayout>
+                      </ContactContaxtProvider>
+                    </TestMailContaxtProvider>
+                  </CamapignContextProvider>
+                </AssetContextProvider>
+              </ProxyContextProvider>
+            </SmtpContaxtProvider>
+          </ValidatorContactContaxtProvider>
         </AuthContextProvider>
       </ThemeProvider>
     </>

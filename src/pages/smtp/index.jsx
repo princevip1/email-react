@@ -117,6 +117,7 @@ const Smtp = () => {
               <Menu.Item>
                 <Tooltip title="Add More">
                   <Button
+                    style={{ width: "100%", textAlign: "left" }}
                     onClick={() => {
                       setAddMoreModal(true);
                       setSelectSmtpGroup(record);
@@ -132,6 +133,7 @@ const Smtp = () => {
               <Menu.Item>
                 <Tooltip title="Download">
                   <Button
+                    style={{ width: "100%", textAlign: "left" }}
                     onClick={() => {
                       downloadSmtp(record._id);
                     }}
@@ -153,6 +155,7 @@ const Smtp = () => {
                     }}
                   >
                     <Button
+                      style={{ width: "100%", textAlign: "left" }}
                       type="text"
                       size="small"
                       danger
@@ -241,12 +244,12 @@ const Smtp = () => {
                   },
                 ]}
               >
-                <Input placeholder="Contact Group Name" />
+                <Input placeholder="Smtp Group Name" />
               </Form.Item>
             </Col>
             <Col span={24}>
               <Form.Item
-                label={"Contacts"}
+                label={"Smtp File"}
                 name="files"
                 rules={[
                   {

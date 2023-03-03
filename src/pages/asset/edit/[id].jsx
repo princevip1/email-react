@@ -13,30 +13,8 @@ import React, { useContext, useEffect, useState } from "react";
 
 const { Dragger } = Upload;
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-const uploadButton = (
-  <div>
-    <PlusOutlined />
-    <div
-      style={{
-        marginTop: 8,
-      }}
-    >
-      Upload
-    </div>
-  </div>
-);
-
 const EditAsset = () => {
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
   const { GetAssetById, assetById, updateAsset, isAssetLoading } =
     useContext(AssetContext);
   const router = useRouter();
@@ -45,7 +23,6 @@ const EditAsset = () => {
   const onFinish = (values) => {
     updateAsset({
       ...values,
-      images: imageUrls,
       id: id,
     });
   };
@@ -61,15 +38,6 @@ const EditAsset = () => {
       });
     }
   }, [assetById]);
-
-  const handleChange = async (file) => {
-    setFileList(file.fileList);
-    if (file.file.status === "done") {
-      const url = await getBase64(file.file.originFileObj);
-      file.file.url = url;
-      setImageUrls((imageUrls) => [...imageUrls, file.file.url]);
-    }
-  };
 
   return (
     <Card title="Add Asset">
@@ -151,28 +119,6 @@ const EditAsset = () => {
                   Support for a single or bulk upload.
                 </p>
               </Dragger>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label={"Image"}
-              name="images"
-              rules={[
-                {
-                  required: true,
-                  message: "Please Enter Contacts",
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                onChange={handleChange}
-                maxCount={10}
-                multiple={true}
-                fileList={fileList}
-              >
-                {fileList.length >= 10 ? null : uploadButton}
-              </Upload>
             </Form.Item>
           </Col>
         </Row>

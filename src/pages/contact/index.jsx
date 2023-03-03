@@ -22,6 +22,7 @@ import {
   DownOutlined,
   InboxOutlined,
   PlusCircleOutlined,
+  RetweetOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
 import { ContactContaxt } from "@/contexts/ContactContaxt";
@@ -82,6 +83,7 @@ const Contact = () => {
                     onConfirm={() => deleteContact(record._id)}
                   >
                     <Button
+                      style={{ width: "100%", textAlign: "left" }}
                       type="text"
                       size="small"
                       danger
@@ -121,14 +123,24 @@ const Contact = () => {
     <Card
       title={"Contact"}
       extra={
-        <Button
-          onClick={() => setOpenModal(true)}
-          size="small"
-          type="primary"
-          icon={<PlusCircleOutlined />}
-        >
-          Add New
-        </Button>
+        <Space>
+          <Button
+            onClick={() => getContact()}
+            size="small"
+            // type="primary"
+            icon={<RetweetOutlined />}
+          >
+            Reload
+          </Button>
+          <Button
+            onClick={() => setOpenModal(true)}
+            size="small"
+            type="primary"
+            icon={<PlusCircleOutlined />}
+          >
+            Add New
+          </Button>
+        </Space>
       }
     >
       <Table
