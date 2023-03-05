@@ -4,6 +4,7 @@ import { notification } from "antd";
 import axios from "axios";
 import HandleError from "src/utils/errorHandle";
 import NotoficationHandler from "@/utils/notificationHandler";
+import { BASE_URL } from "@/utils/api";
 
 export const AuthContext = createContext();
 
@@ -15,10 +16,7 @@ export default function AuthContextProvider({ children }) {
   const login = async (data) => {
     setIsLoading(true);
     try {
-      const result = await axios.post(
-        `http://192.168.0.150:8080/api/v1/auth/login`,
-        data
-      );
+      const result = await axios.post(`${BASE_URL}/auth/login`, data);
       const { token, user } = result.data;
 
       console.log(result);

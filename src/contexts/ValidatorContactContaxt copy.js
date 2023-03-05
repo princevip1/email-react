@@ -76,6 +76,19 @@ export default function ValidatorContactContaxtProvider({ children }) {
     }
   };
 
+  const downloadFile = async (id) => {
+    setValidatorContactLoading(true);
+    try {
+      const result = await Fetch.get(`/download`);
+      setValidatorContactLoading(false);
+      NotoficationHandler(result.data);
+    } catch (e) {
+      console.log(e?.response?.data);
+      setValidatorContactLoading(false);
+      NotoficationHandler(e?.response?.data, "error");
+    }
+  };
+
   return (
     <ValidatorContactContaxt.Provider
       value={{
@@ -85,6 +98,7 @@ export default function ValidatorContactContaxtProvider({ children }) {
         validatorContacts,
         deleteContact,
         updateStatus,
+        downloadFile,
       }}
     >
       {children}

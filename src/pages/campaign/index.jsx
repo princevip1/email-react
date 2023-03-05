@@ -7,7 +7,7 @@ import {
   EditOutlined,
   PauseOutlined,
   PlusCircleOutlined,
-  RetweetOutlined,
+  RetweetOutlined
 } from "@ant-design/icons";
 import {
   Button,
@@ -18,10 +18,10 @@ import {
   Space,
   Table,
   Tag,
-  Tooltip,
+  Tooltip
 } from "antd";
 import Link from "next/link";
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 const Campaign = () => {
   const {
@@ -75,6 +75,7 @@ const Campaign = () => {
       title: "Total Contact",
       dataIndex: "count",
       key: "count",
+      render: (count, record) => <Tag color="blue">{count} </Tag>,
     },
     {
       title: "status",
@@ -98,6 +99,9 @@ const Campaign = () => {
       title: "Pending",
       dataIndex: "pending",
       key: "pending",
+      render: (pending) => (
+        <Tag color={pending === 0 ? "green" : "red"}>{pending}</Tag>
+      ),
     },
     {
       title: "Action",
@@ -215,7 +219,7 @@ const Campaign = () => {
             size="small"
             icon={<RetweetOutlined />}
           >
-            Reload
+            Refresh
           </Button>
 
           <Link href="/campaign/add-campaign">

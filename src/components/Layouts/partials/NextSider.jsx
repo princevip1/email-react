@@ -1,4 +1,5 @@
 import { Image, Layout, Menu, Typography } from "antd";
+import Link from "next/link";
 import NextMenu from "./NextMenu";
 const { Sider } = Layout;
 
@@ -27,13 +28,28 @@ export default function NextSider({ collapsed }) {
           <span style={{ color: "#1890ff" }}>e</span> {collapsed ? "" : "Mail"}
         </Typography.Title>
       </div> */}
-      <Image
-        width={200}
-        src="/logo.png"
-        alt="logo"
-        style={{ marginBottom: 10 }}
-        preview={false}
-      />
+      {collapsed ? (
+        <Link href="/dashboard">
+          <Image
+            width={50}
+            src="/logoIcon.png"
+            alt="logo"
+            style={{ margin: 10 }}
+            preview={false}
+          />
+        </Link>
+      ) : (
+        <Link href="/dashboard">
+          <Image
+            width={150}
+            src="/logo.png"
+            alt="logo"
+            style={{ margin: 10 }}
+            preview={false}
+          />
+        </Link>
+      )}
+
       <NextMenu collapsed={collapsed} />
       {/* <Menu
         theme="light"

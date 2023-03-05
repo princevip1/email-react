@@ -14,8 +14,7 @@ import {
   InputNumber,
   Row,
   Select,
-  Space,
-  Switch,
+  Space
 } from "antd";
 import React, { useContext, useEffect } from "react";
 

@@ -2,14 +2,12 @@ import { AssetContext } from "@/contexts/AssetContext";
 import Layouts from "@/layouts/index";
 import {
   InboxOutlined,
-  LeftCircleOutlined,
-  PlusOutlined,
-  RightCircleOutlined,
+  LeftCircleOutlined, RightCircleOutlined
 } from "@ant-design/icons";
-import { Button, Card, Col, Form, Input, Row, Space, Upload } from "antd";
+import { Button, Card, Col, Form, Input, Row, Space, Typography, Upload } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 const { Dragger } = Upload;
 
@@ -120,6 +118,69 @@ const EditAsset = () => {
                 </p>
               </Dragger>
             </Form.Item>
+          </Col>
+          <Col
+            span={12}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: 16,
+              paddingLeft: 16,
+            }}
+          >
+            <Typography.Text>{"Auto Generated Variable "}</Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{*{random_number(0)}*}"}
+              </strong>
+              {" Use this for Generate Number(1-9) Only"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{*{ab(0)}*}"}
+              </strong>
+              {
+                " Use this variable for generate random Alphabet A to Z (1-9) Only "
+              }
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{*{recipient_email}*} "}
+              </strong>
+              {"Use this variable for Recipient Email Replace"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{*{recipient_name}*}"}
+              </strong>
+              {"  Use this variable for Recipient Name Replace"}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              <strong
+                style={{
+                  color: "blue",
+                }}
+              >
+                {"{{date}}"}
+              </strong>
+              {" Use this variable for Today Date"}
+            </Typography.Text>
           </Col>
         </Row>
         <Space

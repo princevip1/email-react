@@ -1,12 +1,10 @@
 import { AssetContext } from "@/contexts/AssetContext";
 import Layouts from "@/layouts/index";
 import {
-  ExclamationCircleOutlined,
   InboxOutlined,
-  RightCircleOutlined,
+  RightCircleOutlined
 } from "@ant-design/icons";
 import {
-  Alert,
   Button,
   Card,
   Col,
@@ -15,9 +13,9 @@ import {
   Row,
   Space,
   Typography,
-  Upload,
+  Upload
 } from "antd";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 const { Dragger } = Upload;
 
@@ -129,7 +127,7 @@ const AddAsset = () => {
                   color: "blue",
                 }}
               >
-                {"{{random_number(0)}}"}
+                {"{*{random_number(0)}*}"}
               </strong>
               {" Use this for Generate Number(1-9) Only"}
             </Typography.Text>
@@ -139,7 +137,7 @@ const AddAsset = () => {
                   color: "blue",
                 }}
               >
-                {"{{ab(0)}}"}
+                {"{*{ab(0)}*}"}
               </strong>
               {
                 " Use this variable for generate random Alphabet A to Z (1-9) Only "
@@ -151,7 +149,7 @@ const AddAsset = () => {
                   color: "blue",
                 }}
               >
-                {"{{recipient_email}} "}
+                {"{*{recipient_email}*} "}
               </strong>
               {"Use this variable for Recipient Email Replace"}
             </Typography.Text>
@@ -161,7 +159,7 @@ const AddAsset = () => {
                   color: "blue",
                 }}
               >
-                {"{{recipient_name}}"}
+                {"{*{recipient_name}*}"}
               </strong>
               {"  Use this variable for Recipient Name Replace"}
             </Typography.Text>

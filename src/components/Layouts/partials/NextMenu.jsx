@@ -17,6 +17,17 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
+import {
+  FcHome,
+  FcBusinessContact,
+  FcKey,
+  FcSynchronize,
+  FcBiotech,
+  FcBusinessman,
+  FcAddDatabase,
+  FcAddressBook,
+  FcBrokenLink,
+} from "react-icons/fc";
 
 const collapsedItem = [
   {
@@ -83,7 +94,7 @@ const NextMenu = ({ collapsed }) => {
       [
         getItem(
           <Space>
-            <WindowsOutlined />
+            <FcHome />
             <Link href="/dashboard">Dashboard</Link>
           </Space>,
           "dashboard"
@@ -98,14 +109,14 @@ const NextMenu = ({ collapsed }) => {
       [
         getItem(
           <Space>
-            <MailOutlined />
+            <FcAddressBook />
             <Link href="/validator">Mail Validator</Link>
           </Space>,
           "validator"
         ),
         getItem(
           <Space>
-            <IdcardOutlined />
+            <FcBusinessman />
             <Link href="/contact">Contact</Link>
           </Space>,
           "contact"
@@ -120,21 +131,21 @@ const NextMenu = ({ collapsed }) => {
       [
         getItem(
           <Space>
-            <BlockOutlined />
+            <FcBrokenLink />
             <Link href="/smtp">Smtp</Link>
           </Space>,
           "smtp"
         ),
         getItem(
           <Space>
-            <FileDoneOutlined />
+            <FcAddDatabase />
             <Link href="/asset">Asset</Link>
           </Space>,
           "asset"
         ),
         getItem(
           <Space>
-            <LockOutlined />
+            <FcKey />
             <Link href="/proxy">Proxy</Link>
           </Space>,
           "proxy"
@@ -149,14 +160,14 @@ const NextMenu = ({ collapsed }) => {
       [
         getItem(
           <Space>
-            <MacCommandOutlined />
+            <FcBiotech />
             <Link href="/campaign">Camapign</Link>
           </Space>,
           "campaign"
         ),
         getItem(
           <Space>
-            <NodeExpandOutlined />
+            <FcSynchronize />
             <Link href="/testing">Testing</Link>
           </Space>,
           "testing"

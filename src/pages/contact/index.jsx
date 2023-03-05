@@ -13,6 +13,7 @@ import {
   Row,
   Space,
   Table,
+  Tag,
   Tooltip,
   Upload,
 } from "antd";
@@ -66,6 +67,7 @@ const Contact = () => {
       title: "Total Contact",
       dataIndex: "count",
       key: "count",
+      render: (count, record) => <Tag color="blue">{count} </Tag>,
     },
 
     {
@@ -127,10 +129,9 @@ const Contact = () => {
           <Button
             onClick={() => getContact()}
             size="small"
-            // type="primary"
             icon={<RetweetOutlined />}
           >
-            Reload
+            Refresh
           </Button>
           <Button
             onClick={() => setOpenModal(true)}

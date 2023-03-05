@@ -17,6 +17,7 @@ import {
   Tooltip,
   Dropdown,
   Typography,
+  Tag,
 } from "antd";
 import {
   CloseCircleOutlined,
@@ -30,6 +31,8 @@ import {
 } from "@ant-design/icons";
 import { ContactContaxt } from "@/contexts/ContactContaxt";
 import { SmtpContaxt } from "@/contexts/SmtpContext";
+import Link from "next/link";
+import { BASE_URL } from "@/utils/api";
 
 const { Dragger } = Upload;
 
@@ -94,16 +97,19 @@ const Smtp = () => {
       title: "Total Smtp",
       dataIndex: "count",
       key: "count",
+      render: (count, record) => <Tag color="blue">{count} </Tag>,
     },
     {
       title: "Active Smtp",
       dataIndex: "active",
       key: "active",
+      render: (active, record) => <Tag color="green">{active} </Tag>,
     },
     {
       title: "Dead Smtp",
       dataIndex: "dead",
       key: "dead",
+      render: (dead, record) => <Tag color="red">{dead} </Tag>,
     },
 
     {
@@ -132,17 +138,19 @@ const Smtp = () => {
               </Menu.Item>
               <Menu.Item>
                 <Tooltip title="Download">
-                  <Button
-                    style={{ width: "100%", textAlign: "left" }}
-                    onClick={() => {
-                      downloadSmtp(record._id);
-                    }}
-                    type="ghost"
-                    size="small"
-                    icon={<DownloadOutlined />}
+                  <Link
+                    href={`${BASE_URL}/download/smtp/${record._id}`}
+                    target="_blank"
                   >
-                    Download
-                  </Button>
+                    <Button
+                      style={{ width: "100%", textAlign: "left" }}
+                      type="ghost"
+                      size="small"
+                      icon={<DownloadOutlined />}
+                    >
+                      Download
+                    </Button>
+                  </Link>
                 </Tooltip>
               </Menu.Item>
 
@@ -204,7 +212,7 @@ const Smtp = () => {
             size="small"
             icon={<RetweetOutlined />}
           >
-            Reload
+            Refresh
           </Button>
           <Button
             onClick={() => setOpenModal(true)}

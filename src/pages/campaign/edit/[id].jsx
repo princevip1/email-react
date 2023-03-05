@@ -14,8 +14,7 @@ import {
   InputNumber,
   Row,
   Select,
-  Space,
-  Switch,
+  Space
 } from "antd";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";

@@ -1,5 +1,6 @@
 import { ValidatorContactContaxt } from "@/contexts/ValidatorContactContaxt copy";
 import Layouts from "@/layouts/index";
+import { API, BASE_URL } from "@/utils/api";
 import {
   CloseCircleOutlined,
   DeleteOutlined,
@@ -8,6 +9,7 @@ import {
   InboxOutlined,
   InfoCircleOutlined,
   PlusCircleOutlined,
+  RetweetOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
 import {
@@ -27,6 +29,7 @@ import {
   Tooltip,
   Upload,
 } from "antd";
+import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 const { Dragger } = Upload;
 
@@ -38,6 +41,7 @@ const Validator = () => {
     validatorContacts,
     deleteContact,
     updateStatus,
+    downloadFile,
   } = useContext(ValidatorContactContaxt);
   const [form] = Form.useForm();
   const [openModal, setOpenModal] = useState(false);
@@ -72,21 +76,27 @@ const Validator = () => {
       title: "Total Contact",
       dataIndex: "count",
       key: "count",
+      render: (count, record) => <Tag color="blue">{count} </Tag>,
     },
     {
       title: "Valid Contact",
       dataIndex: "validCount",
       key: "validCount",
+      render: (validCount, record) => <Tag color="green">{validCount} </Tag>,
     },
     {
       title: "Invalid Contact",
       dataIndex: "invalidCount",
       key: "invalidCount",
+      render: (invalidCount, record) => <Tag color="red">{invalidCount} </Tag>,
     },
     {
       title: "Pending Contact",
       dataIndex: "notValidateCount",
       key: "notValidateCount",
+      render: (notValidateCount, record) => (
+        <Tag color="orange">{notValidateCount} </Tag>
+      ),
     },
     {
       title: "Status",
@@ -158,26 +168,23 @@ const Validator = () => {
                 </Tooltip>
               </Menu.Item>
               <Menu.Item>
-                <Tooltip title="Start Validator">
-                  <Popconfirm
-                    title="Are you sure？"
-                    onConfirm={() => console.log("first")}
+                <Tooltip title="Download Contact">
+                  <Link
+                    href={`${BASE_URL}/download/validator/contact/${record._id}`}
+                    target="_blank"
                   >
                     <Button
-                      onClick={() => {
-                        console.log("first");
-                      }}
                       type="ghost"
                       size="small"
                       icon={<DownloadOutlined />}
                     >
                       Download
                     </Button>
-                  </Popconfirm>
+                  </Link>
                 </Tooltip>
               </Menu.Item>
               <Menu.Item>
-                <Tooltip title="Start Validator">
+                <Tooltip title="Delete">
                   <Popconfirm
                     title="Are you sure？"
                     onConfirm={() => {
@@ -223,19 +230,35 @@ const Validator = () => {
     <Card
       title="Mail Validator"
       extra={
-        <Button
-          onClick={() => {
-            setOpenModal(true);
-          }}
-          size="small"
-          type="primary"
-          icon={<PlusCircleOutlined />}
-        >
-          Add New
-        </Button>
+        <Space>
+          <Button
+            onClick={() => {
+              getContact();
+            }}
+            size="small"
+            icon={<RetweetOutlined />}
+          >
+            Refresh
+          </Button>
+          <Button
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            size="small"
+            type="primary"
+            icon={<PlusCircleOutlined />}
+          >
+            Add New
+          </Button>
+        </Space>
       }
     >
-      <Table dataSource={validatorContacts} columns={columns} />
+      <Table
+        size="small"
+        loading={isValidatorContactLoading}
+        dataSource={validatorContacts}
+        columns={columns}
+      />
 
       <Modal
         title="Add New Validator"
@@ -245,6 +268,7 @@ const Validator = () => {
           form.resetFields();
         }}
         footer={null}
+        width={600}
       >
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Row gutter={[16, 16]}>

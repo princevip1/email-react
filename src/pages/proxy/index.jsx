@@ -14,6 +14,7 @@ import {
   Dropdown,
   Menu,
   Tooltip,
+  Tag,
 } from "antd";
 import {
   CloseCircleOutlined,
@@ -78,6 +79,7 @@ const Proxy = () => {
       title: "Total Proxy",
       dataIndex: "count",
       key: "count",
+      render: (count, record) => <Tag color="blue">{count} </Tag>,
     },
 
     {
@@ -152,7 +154,7 @@ const Proxy = () => {
             size="small"
             icon={<RetweetOutlined />}
           >
-            Reload
+            Refresh
           </Button>
           <Button
             onClick={() => setOpenModal(true)}

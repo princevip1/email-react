@@ -161,7 +161,7 @@ const Login = () => {
                   Login
                 </Button>
               </Form>
-              <Space
+              {/* <Space
                 style={{
                   width: "100%",
                   justifyContent: "center",
@@ -170,7 +170,7 @@ const Login = () => {
               >
                 <span>You Dont have any account?</span>
                 <Link href="/#">Sign Up</Link>
-              </Space>
+              </Space> */}
             </Card>
           </Content>
         </main>

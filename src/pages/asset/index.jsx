@@ -4,22 +4,19 @@ import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
-  PlusCircleOutlined,
+  PlusCircleOutlined
 } from "@ant-design/icons";
 import {
   Button,
   Card,
   Dropdown,
   Menu,
-  Popconfirm,
-  Space,
-  Table,
+  Popconfirm, Table,
   Tooltip,
-  Typography,
+  Typography
 } from "antd";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const Assets = () => {
   const { assets, getAsset, deleteAsset, isAssetLoading } =
