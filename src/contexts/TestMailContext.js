@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import { API } from "@/utils/api";
 import Fetch from "@/utils/axios";
 import NotoficationHandler from "@/utils/notificationHandler";
+import { message } from "antd";
 
 export const TestMailContaxt = createContext();
 
@@ -16,8 +17,7 @@ export default function TestMailContaxtProvider({ children }) {
       form.resetFields();
       setMailTestLoading(false);
     } catch (e) {
-      console.log(e?.response?.data);
-      NotoficationHandler(e?.response?.data, "error");
+      message.error(e?.response?.data?.message?.response);
       form.resetFields();
       setMailTestLoading(false);
     }

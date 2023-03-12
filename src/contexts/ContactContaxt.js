@@ -9,6 +9,8 @@ export default function ContactContaxtProvider({ children }) {
   const [isContactLoading, setContactLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
 
+  const [uploading, setUploading] = useState(false);
+
   const getContact = async () => {
     setContactLoading(true);
     try {
@@ -23,19 +25,23 @@ export default function ContactContaxtProvider({ children }) {
 
   const addContact = async (data, setOpenModal = false, form = null) => {
     setContactLoading(true);
+    setUploading(true);
     try {
+      setOpenModal(false);
       let formData = new FormData();
       formData.append("name", data.name);
       formData.append("file", data.files.file.originFileObj);
       const result = await Fetch.post(API.contact, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      setUploading(false);
       getContact();
       setContactLoading(false);
       setOpenModal(false);
       NotoficationHandler(result.data);
       form.resetFields();
     } catch (e) {
+      setUploading(false);
       console.log(e?.response?.data);
       setOpenModal(false);
       form.resetFields();
@@ -67,6 +73,7 @@ export default function ContactContaxtProvider({ children }) {
         addContact,
         contacts,
         deleteContact,
+        uploading,
       }}
     >
       {children}

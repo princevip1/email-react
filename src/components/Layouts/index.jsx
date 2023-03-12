@@ -4,6 +4,7 @@ import { Layout, Spin, theme } from "antd";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { useState } from "react";
+import { UploadCard } from "../common/upload-card";
 import { NextHeader } from "./partials/NextHeader";
 import NextSider from "./partials/NextSider";
 const { Content } = Layout;
@@ -71,7 +72,10 @@ const Layouts = ({ children }) => {
               <Spin tip="Sit tight, loading the page.."></Spin>
             </div>
           ) : (
-            children
+            <>
+              <UploadCard />
+              {children}
+            </>
           )}
         </Content>
       </Layout>
