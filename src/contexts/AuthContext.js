@@ -18,8 +18,6 @@ export default function AuthContextProvider({ children }) {
     try {
       const result = await axios.post(`${BASE_URL}/auth/login`, data);
       const { token, user } = result.data;
-
-      console.log(result);
       if (token) {
         setUser(user);
         localStorage.setItem("authToken", token);
