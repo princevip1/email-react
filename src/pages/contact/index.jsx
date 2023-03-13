@@ -20,6 +20,7 @@ import {
 import {
   CloseCircleOutlined,
   DeleteOutlined,
+  DownloadOutlined,
   DownOutlined,
   InboxOutlined,
   PlusCircleOutlined,
@@ -27,6 +28,8 @@ import {
   RightCircleOutlined,
 } from "@ant-design/icons";
 import { ContactContaxt } from "@/contexts/ContactContaxt";
+import { BASE_URL } from "@/utils/api";
+import Link from "next/link";
 const { Dragger } = Upload;
 
 const Contact = () => {
@@ -78,6 +81,23 @@ const Contact = () => {
         <Dropdown
           overlay={
             <Menu>
+              <Menu.Item>
+                <Tooltip title="Delete">
+                  <Link
+                    href={`${BASE_URL}/download/contact/${record._id}`}
+                    target="_blank"
+                  >
+                    <Button
+                      style={{ width: "100%", textAlign: "left" }}
+                      type="text"
+                      size="small"
+                      icon={<DownloadOutlined />}
+                    >
+                      Download
+                    </Button>
+                  </Link>
+                </Tooltip>
+              </Menu.Item>
               <Menu.Item>
                 <Tooltip title="Delete">
                   <Popconfirm

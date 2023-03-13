@@ -25,13 +25,15 @@ const Layouts = ({ children }) => {
         setApploAding(false);
       } catch (err) {
         console.log(err.response);
-        message.error('You are not authorized to access this page, please login first');
+        message.error(
+          "You are not authorized to access this page, please login first"
+        );
         Router.push("/login");
       }
     };
     checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [Router.pathname]);
+    // }, [Router.pathname]);
   }, []);
 
   if (user === null) {
@@ -59,6 +61,9 @@ const Layouts = ({ children }) => {
           style={{
             padding: 24,
             minHeight: 280,
+            maxWidth: 1920,
+            width: "100%",
+            margin: "0 auto",
           }}
         >
           {apploading ? (
