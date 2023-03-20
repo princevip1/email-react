@@ -2,24 +2,17 @@ import {
   BlockOutlined,
   FileDoneOutlined,
   IdcardOutlined,
-  KeyOutlined,
   LockOutlined,
   MacCommandOutlined,
   NodeExpandOutlined,
-  UserOutlined,
   WindowsOutlined,
 } from "@ant-design/icons";
-import { Space, Typography } from "antd";
+import { Space } from "antd";
 import Link from "next/link";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import {
   FcHome,
-  FcBusinessContact,
   FcKey,
   FcSynchronize,
   FcBiotech,
@@ -161,7 +154,7 @@ const NextMenu = ({ collapsed }) => {
         getItem(
           <Space>
             <FcBiotech />
-            <Link href="/campaign">Camapign</Link>
+            <Link href="/campaign">Campaign</Link>
           </Space>,
           "campaign"
         ),

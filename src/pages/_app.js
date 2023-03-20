@@ -11,12 +11,14 @@ import NextNProgress from "nextjs-progressbar";
 import "@/styles/globals.css";
 import ThemeProvider from "@/themes/ThemeProvider";
 import "antd/dist/reset.css";
+import DashboardContextProvider from "@/contexts/DashboardContext";
 export default function App({ Component, pageProps }) {
   const CustomLayout = Component.Layout || EmptyLayout;
   return (
     <>
       <ThemeProvider>
         <AuthContextProvider>
+          <DashboardContextProvider>
           <ValidatorContactContaxtProvider>
             <SmtpContaxtProvider>
               <ProxyContextProvider>
@@ -40,7 +42,8 @@ export default function App({ Component, pageProps }) {
                 </AssetContextProvider>
               </ProxyContextProvider>
             </SmtpContaxtProvider>
-          </ValidatorContactContaxtProvider>
+            </ValidatorContactContaxtProvider>
+          </DashboardContextProvider>
         </AuthContextProvider>
       </ThemeProvider>
     </>

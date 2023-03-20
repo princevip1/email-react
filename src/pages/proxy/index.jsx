@@ -26,6 +26,7 @@ import {
 } from "@ant-design/icons";
 
 import { ProxyContext } from "@/contexts/ProxyContext";
+import Head from "next/head";
 
 const Proxy = () => {
   const {
@@ -143,177 +144,187 @@ const Proxy = () => {
   ];
 
   return (
-    <Card
-      title={"Proxy"}
-      extra={
-        <Space>
-          <Button
-            loading={isProxyLoading}
-            disabled={isProxyLoading}
-            onClick={() => getProxy()}
-            size="small"
-            icon={<RetweetOutlined />}
-          >
-            Refresh
-          </Button>
-          <Button
-            onClick={() => setOpenModal(true)}
-            size="small"
-            type="primary"
-            icon={<PlusCircleOutlined />}
-          >
-            Add New
-          </Button>
-        </Space>
-      }
-    >
-      <Table
-        loading={isProxyLoading}
-        size="small"
-        dataSource={proxy?.proxyGroup}
-        columns={columns}
-      />
-
-      <Modal
-        open={openModal}
-        onCancel={() => {
-          setOpenModal(false);
-          form.resetFields();
-        }}
-        title={"Add Proxy Group"}
-        footer={null}
-        width={600}
-      >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <Form.Item
-                label={"Proxy Group Name"}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Group Name",
-                  },
-                ]}
-              >
-                <Input placeholder="Proxy Group Name" />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label={"Proxies"}
-                name="proxies"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Contacts",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  placeholder="Enter Proxies"
-                  autoSize={{ minRows: 10, maxRows: 30 }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Space
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 16,
-            }}
-          >
+    <>
+      <Head>
+        <title>Falcon Dynamic || Proxy</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Card
+        title={"Proxy"}
+        extra={
+          <Space>
             <Button
               loading={isProxyLoading}
               disabled={isProxyLoading}
-              onClick={() => {
-                setOpenModal(false);
-                form.resetFields();
-              }}
-              icon={<CloseCircleOutlined />}
-              danger
+              onClick={() => getProxy()}
+              size="small"
+              icon={<RetweetOutlined />}
             >
-              Cancel
+              Refresh
             </Button>
             <Button
-              loading={isProxyLoading}
-              disabled={isProxyLoading}
-              htmlType="submit"
-              icon={<RightCircleOutlined />}
+              onClick={() => setOpenModal(true)}
+              size="small"
               type="primary"
+              icon={<PlusCircleOutlined />}
             >
-              Submit
+              Add New
             </Button>
           </Space>
-        </Form>
-      </Modal>
-
-      <Modal
-        open={addMoreModal}
-        onCancel={() => {
-          setAddMoreModal(false);
-          form2.resetFields();
-          setProxyId(null);
-        }}
-        title={"More Add Proxy "}
-        footer={null}
-        width={600}
+        }
       >
-        <Form layout="vertical" form={form2} onFinish={onFinish2}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <Form.Item
-                label={"Proxies"}
-                name="proxies"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Contacts",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  placeholder="Enter Proxies"
-                  autoSize={{ minRows: 10, maxRows: 30 }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Space
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 16,
-            }}
-          >
-            <Button
-              loading={isProxyLoading}
-              disabled={isProxyLoading}
-              onClick={() => {
-                setAddMoreModal(false);
-                form2.resetFields();
-                setProxyId(null);
+        <Table
+          loading={isProxyLoading}
+          size="small"
+          dataSource={proxy?.proxyGroup}
+          columns={columns}
+        />
+
+        <Modal
+          open={openModal}
+          onCancel={() => {
+            setOpenModal(false);
+            form.resetFields();
+          }}
+          title={"Add Proxy Group"}
+          footer={null}
+          width={600}
+        >
+          <Form layout="vertical" form={form} onFinish={onFinish}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Proxy Group Name"}
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Group Name",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Proxy Group Name" />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  label={"Proxies"}
+                  name="proxies"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Contacts",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    placeholder="Enter Proxies"
+                    autoSize={{ minRows: 10, maxRows: 30 }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
               }}
-              icon={<CloseCircleOutlined />}
-              danger
             >
-              Cancel
-            </Button>
-            <Button
-              loading={isProxyLoading}
-              disabled={isProxyLoading}
-              htmlType="submit"
-              icon={<RightCircleOutlined />}
-              type="primary"
+              <Button
+                loading={isProxyLoading}
+                disabled={isProxyLoading}
+                onClick={() => {
+                  setOpenModal(false);
+                  form.resetFields();
+                }}
+                icon={<CloseCircleOutlined />}
+                danger
+              >
+                Cancel
+              </Button>
+              <Button
+                loading={isProxyLoading}
+                disabled={isProxyLoading}
+                htmlType="submit"
+                icon={<RightCircleOutlined />}
+                type="primary"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+
+        <Modal
+          open={addMoreModal}
+          onCancel={() => {
+            setAddMoreModal(false);
+            form2.resetFields();
+            setProxyId(null);
+          }}
+          title={"More Add Proxy "}
+          footer={null}
+          width={600}
+        >
+          <Form layout="vertical" form={form2} onFinish={onFinish2}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Proxies"}
+                  name="proxies"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Contacts",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    placeholder="Enter Proxies"
+                    autoSize={{ minRows: 10, maxRows: 30 }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
+              }}
             >
-              Submit
-            </Button>
-          </Space>
-        </Form>
-      </Modal>
-    </Card>
+              <Button
+                loading={isProxyLoading}
+                disabled={isProxyLoading}
+                onClick={() => {
+                  setAddMoreModal(false);
+                  form2.resetFields();
+                  setProxyId(null);
+                }}
+                icon={<CloseCircleOutlined />}
+                danger
+              >
+                Cancel
+              </Button>
+              <Button
+                loading={isProxyLoading}
+                disabled={isProxyLoading}
+                htmlType="submit"
+                icon={<RightCircleOutlined />}
+                type="primary"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+      </Card>
+    </>
   );
 };
 

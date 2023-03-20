@@ -33,6 +33,7 @@ import { ContactContaxt } from "@/contexts/ContactContaxt";
 import { SmtpContaxt } from "@/contexts/SmtpContext";
 import Link from "next/link";
 import { BASE_URL } from "@/utils/api";
+import Head from "next/head";
 
 const { Dragger } = Upload;
 
@@ -51,6 +52,7 @@ const Smtp = () => {
   const [openModal, setOpenModal] = useState(false);
   const [addMoreModal, setAddMoreModal] = useState(false);
   const [selectSmtpGroup, setSelectSmtpGroup] = useState(null);
+  const [passcode, setPasscode] = useState("");
 
   const onFinish = (values) => {
     addSmtp(values, setOpenModal, form);
@@ -138,10 +140,29 @@ const Smtp = () => {
               </Menu.Item>
               <Menu.Item>
                 <Tooltip title="Download">
-                  <Link
-                    href={`${BASE_URL}/download/smtp/${record._id}`}
-                    target="_blank"
+                  <Popconfirm
+                    title="Enter Passcode"
+                    description={
+                      <Input
+                        value={passcode}
+                        type="password"
+                        placeholder="Enter Passcode"
+                        onChange={(e) => {
+                          setPasscode(e.target.value);
+                        }}
+                      />
+                    }
+                    onConfirm={() => {
+                      window.open(
+                        `${BASE_URL}/download/smtp/${record._id}?passcode=${passcode}`
+                      );
+                      setPasscode("");
+                    }}
                   >
+                    {/* <Link
+                      href={`${BASE_URL}/download/smtp/${record._id}?passcode=${passcode}`}
+                      target="_blank"
+                    > */}
                     <Button
                       style={{ width: "100%", textAlign: "left" }}
                       type="ghost"
@@ -150,7 +171,8 @@ const Smtp = () => {
                     >
                       Download
                     </Button>
-                  </Link>
+                    {/* </Link> */}
+                  </Popconfirm>
                 </Tooltip>
               </Menu.Item>
 
@@ -201,183 +223,193 @@ const Smtp = () => {
   };
 
   return (
-    <Card
-      title={"Smtp"}
-      extra={
-        <Space>
-          <Button
-            loading={isSmtpLoading}
-            disabled={isSmtpLoading}
-            onClick={() => getSmtp()}
-            size="small"
-            icon={<RetweetOutlined />}
-          >
-            Refresh
-          </Button>
-          <Button
-            onClick={() => setOpenModal(true)}
-            size="small"
-            type="primary"
-            icon={<PlusCircleOutlined />}
-          >
-            Add New
-          </Button>
-        </Space>
-      }
-    >
-      <Table
-        loading={isSmtpLoading}
-        size="small"
-        dataSource={smtps && smtps ? smtps : []}
-        columns={columns}
-      />
-
-      <Modal
-        open={openModal}
-        onCancel={() => setOpenModal(false)}
-        title={"Add Smtp"}
-        footer={null}
-        width={600}
-      >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <Form.Item
-                label={"Smtp Group Name"}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Group Name",
-                  },
-                ]}
-              >
-                <Input placeholder="Smtp Group Name" />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label={"Smtp File"}
-                name="files"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Contacts",
-                  },
-                ]}
-              >
-                <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
-                </Dragger>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Space
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 16,
-            }}
-          >
+    <>
+      <Head>
+        <title>Falcon Dynamic || SMTP</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Card
+        title={"Smtp"}
+        extra={
+          <Space>
             <Button
               loading={isSmtpLoading}
               disabled={isSmtpLoading}
-              onClick={() => setOpenModal(false)}
-              icon={<CloseCircleOutlined />}
-              danger
+              onClick={() => getSmtp()}
+              size="small"
+              icon={<RetweetOutlined />}
             >
-              Cancel
+              Refresh
             </Button>
             <Button
-              loading={isSmtpLoading}
-              disabled={isSmtpLoading}
-              htmlType="submit"
-              icon={<RightCircleOutlined />}
+              onClick={() => setOpenModal(true)}
+              size="small"
               type="primary"
+              icon={<PlusCircleOutlined />}
             >
-              Submit
+              Add New
             </Button>
           </Space>
-        </Form>
-      </Modal>
-
-      <Modal
-        open={addMoreModal}
-        onCancel={() => {
-          setAddMoreModal(false);
-          addMoreForm.resetFields();
-        }}
-        title={"Add More Smtp"}
-        footer={null}
-        width={600}
+        }
       >
-        <Form layout="vertical" form={addMoreForm} onFinish={addMoreOnFinish}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <Form.Item
-                label={"Smtp"}
-                name="files"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Contacts",
-                  },
-                ]}
-              >
-                <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
-                </Dragger>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Space
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 16,
-            }}
-          >
-            <Button
-              loading={isSmtpLoading}
-              disabled={isSmtpLoading}
-              onClick={() => {
-                setAddMoreModal(false);
-                addMoreForm.resetFields();
+        <Table
+          loading={isSmtpLoading}
+          size="small"
+          dataSource={smtps && smtps ? smtps : []}
+          columns={columns}
+        />
+
+        <Modal
+          open={openModal}
+          onCancel={() => setOpenModal(false)}
+          title={"Add Smtp"}
+          footer={null}
+          width={600}
+        >
+          <Form layout="vertical" form={form} onFinish={onFinish}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Smtp Group Name"}
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Group Name",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Smtp Group Name" />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  label={"Smtp File"}
+                  name="files"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Contacts",
+                    },
+                  ]}
+                >
+                  <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag file to this area to upload
+                    </p>
+                    <p className="ant-upload-hint">
+                      Support for a single or bulk upload.
+                    </p>
+                  </Dragger>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
               }}
-              icon={<CloseCircleOutlined />}
-              danger
             >
-              Cancel
-            </Button>
-            <Button
-              loading={isSmtpLoading}
-              disabled={isSmtpLoading}
-              htmlType="submit"
-              icon={<RightCircleOutlined />}
-              type="primary"
+              <Button
+                loading={isSmtpLoading}
+                disabled={isSmtpLoading}
+                onClick={() => setOpenModal(false)}
+                icon={<CloseCircleOutlined />}
+                danger
+              >
+                Cancel
+              </Button>
+              <Button
+                loading={isSmtpLoading}
+                disabled={isSmtpLoading}
+                htmlType="submit"
+                icon={<RightCircleOutlined />}
+                type="primary"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+
+        <Modal
+          open={addMoreModal}
+          onCancel={() => {
+            setAddMoreModal(false);
+            addMoreForm.resetFields();
+          }}
+          title={"Add More Smtp"}
+          footer={null}
+          width={600}
+        >
+          <Form layout="vertical" form={addMoreForm} onFinish={addMoreOnFinish}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Smtp"}
+                  name="files"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Contacts",
+                    },
+                  ]}
+                >
+                  <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag file to this area to upload
+                    </p>
+                    <p className="ant-upload-hint">
+                      Support for a single or bulk upload.
+                    </p>
+                  </Dragger>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
+              }}
             >
-              Submit
-            </Button>
-          </Space>
-        </Form>
-      </Modal>
-    </Card>
+              <Button
+                loading={isSmtpLoading}
+                disabled={isSmtpLoading}
+                onClick={() => {
+                  setAddMoreModal(false);
+                  addMoreForm.resetFields();
+                }}
+                icon={<CloseCircleOutlined />}
+                danger
+              >
+                Cancel
+              </Button>
+              <Button
+                loading={isSmtpLoading}
+                disabled={isSmtpLoading}
+                htmlType="submit"
+                icon={<RightCircleOutlined />}
+                type="primary"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+      </Card>
+    </>
   );
 };
 

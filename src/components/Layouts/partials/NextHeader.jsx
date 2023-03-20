@@ -45,7 +45,10 @@ export const NextHeader = ({ collapsed, setCollapsed }) => {
           collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
           {
             className: "trigger",
-            onClick: () => setCollapsed(!collapsed),
+            onClick: () => {
+              setCollapsed(!collapsed);
+              localStorage.setItem("sideberHidden", !collapsed);
+            },
           }
         )}
 
@@ -85,7 +88,7 @@ export const NextHeader = ({ collapsed, setCollapsed }) => {
                 <DownOutlined />
               </Button>
             </a> */}
-            <Avatar />
+            <Avatar size={'small'} src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png" />
           </Dropdown>
         </Space>
       </Space>

@@ -30,6 +30,7 @@ import {
 import { ContactContaxt } from "@/contexts/ContactContaxt";
 import { BASE_URL } from "@/utils/api";
 import Link from "next/link";
+import Head from "next/head";
 const { Dragger } = Upload;
 
 const Contact = () => {
@@ -142,118 +143,129 @@ const Contact = () => {
   };
 
   return (
-    <Card
-      title={"Contact"}
-      extra={
-        <Space>
-          <Button
-            onClick={() => getContact()}
-            size="small"
-            icon={<RetweetOutlined />}
-          >
-            Refresh
-          </Button>
-          <Button
-            onClick={() => setOpenModal(true)}
-            size="small"
-            type="primary"
-            icon={<PlusCircleOutlined />}
-          >
-            Add New
-          </Button>
-        </Space>
-      }
-    >
-      <Table
-        loading={isContactLoading}
-        size="small"
-        dataSource={contacts}
-        columns={columns}
-      />
+    <>
+      <Head>
+        <title>Falcon Dynamic || Contact</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <Modal
-        open={openModal}
-        onCancel={() => {
-          setOpenModal(false);
-          form.resetFields();
-        }}
-        title={"Add Contact"}
-        footer={null}
-        width={600}
-        on
-      >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <Form.Item
-                label={"Contact Group Name"}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Group Name",
-                  },
-                ]}
-              >
-                <Input placeholder="Contact Group Name" />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
-                label={"Contacts"}
-                name="files"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Enter Contacts",
-                  },
-                ]}
-              >
-                <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
-                </Dragger>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Space
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: 16,
-            }}
-          >
+      <Card
+        title={"Contact"}
+        extra={
+          <Space>
             <Button
-              disabled={isContactLoading}
-              onClick={() => {
-                setOpenModal(false);
-                form.resetFields();
-              }}
-              icon={<CloseCircleOutlined />}
-              danger
+              onClick={() => getContact()}
+              size="small"
+              icon={<RetweetOutlined />}
             >
-              Cancel
+              Refresh
             </Button>
             <Button
-              loading={isContactLoading}
-              disabled={isContactLoading}
-              htmlType="submit"
-              icon={<RightCircleOutlined />}
+              onClick={() => setOpenModal(true)}
+              size="small"
               type="primary"
+              icon={<PlusCircleOutlined />}
             >
-              Submit
+              Add New
             </Button>
           </Space>
-        </Form>
-      </Modal>
-    </Card>
+        }
+      >
+        <Table
+          loading={isContactLoading}
+          size="small"
+          dataSource={contacts}
+          columns={columns}
+        />
+
+        <Modal
+          open={openModal}
+          onCancel={() => {
+            setOpenModal(false);
+            form.resetFields();
+          }}
+          title={"Add Contact"}
+          footer={null}
+          width={600}
+          on
+        >
+          <Form layout="vertical" form={form} onFinish={onFinish}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Form.Item
+                  label={"Contact Group Name"}
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Group Name",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Contact Group Name" />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  label={"Contacts"}
+                  name="files"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Contacts",
+                    },
+                  ]}
+                >
+                  <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag file to this area to upload
+                    </p>
+                    <p className="ant-upload-hint">
+                      Support for a single or bulk upload.
+                    </p>
+                  </Dragger>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 16,
+              }}
+            >
+              <Button
+                disabled={isContactLoading}
+                onClick={() => {
+                  setOpenModal(false);
+                  form.resetFields();
+                }}
+                icon={<CloseCircleOutlined />}
+                danger
+              >
+                Cancel
+              </Button>
+              <Button
+                loading={isContactLoading}
+                disabled={isContactLoading}
+                htmlType="submit"
+                icon={<RightCircleOutlined />}
+                type="primary"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Form>
+        </Modal>
+      </Card>
+    </>
   );
 };
 

@@ -16,6 +16,7 @@ import {
   Select,
   Space
 } from "antd";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 
@@ -61,6 +62,15 @@ const AddCampaign = () => {
   }, [campaignById]);
 
   return (
+    <>
+      <Head>
+        <title>Falcon Dynamic || Campaign</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
     <Card title="Edit Campaign">
       <Form name="basic" layout="vertical" form={form} onFinish={onFinish}>
         <Row gutter={16}>
@@ -217,7 +227,8 @@ const AddCampaign = () => {
           </Button>
         </Space>
       </Form>
-    </Card>
+      </Card>
+    </>
   );
 };
 AddCampaign.Layout = Layouts;

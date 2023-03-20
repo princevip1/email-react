@@ -20,6 +20,7 @@ import {
   Tag,
   Tooltip,
 } from "antd";
+import Head from "next/head";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 
@@ -87,8 +88,8 @@ const Campaign = () => {
             status === "active"
               ? "green"
               : status === "pending"
-              ? "orange"
-              : "red"
+              ? "red"
+              : "yellow"
           }
         >
           {status}
@@ -195,48 +196,58 @@ const Campaign = () => {
     },
   ];
   return (
-    <Card
-      title="Campaign"
-      extra={
-        <Space>
-          <Popconfirm
-            title="Are you sure？"
-            onConfirm={() => {
-              deleteRestCampaign();
-            }}
-          >
-            <Button size="small" danger icon={<DeleteOutlined />}>
-              Delete All
-            </Button>
-          </Popconfirm>
+    <>
+      <Head>
+        <title>Falcon Dynamic || Campaign</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Card
+        title="Campaign"
+        extra={
+          <Space>
+            <Popconfirm
+              title="Are you sure？"
+              onConfirm={() => {
+                deleteRestCampaign();
+              }}
+            >
+              <Button size="small" danger icon={<DeleteOutlined />}>
+                Delete All
+              </Button>
+            </Popconfirm>
 
-          <Button
-            disabled={isCampaignLoading}
-            loading={isCampaignLoading}
-            onClick={() => {
-              getCampaign();
-            }}
-            size="small"
-            icon={<RetweetOutlined />}
-          >
-            Refresh
-          </Button>
-
-          <Link href="/campaign/add-campaign">
-            <Button icon={<PlusCircleOutlined />} type="primary" size="small">
-              Add Campaign
+            <Button
+              disabled={isCampaignLoading}
+              loading={isCampaignLoading}
+              onClick={() => {
+                getCampaign();
+              }}
+              size="small"
+              icon={<RetweetOutlined />}
+            >
+              Refresh
             </Button>
-          </Link>
-        </Space>
-      }
-    >
-      <Table
-        loading={isCampaignLoading}
-        size="small"
-        dataSource={campaign}
-        columns={columns}
-      />
-    </Card>
+
+            <Link href="/campaign/add-campaign">
+              <Button icon={<PlusCircleOutlined />} type="primary" size="small">
+                Add Campaign
+              </Button>
+            </Link>
+          </Space>
+        }
+      >
+        <Table
+          loading={isCampaignLoading}
+          size="small"
+          dataSource={campaign}
+          columns={columns}
+        />
+      </Card>
+    </>
   );
 };
 

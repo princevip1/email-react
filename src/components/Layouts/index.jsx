@@ -9,7 +9,13 @@ import { NextHeader } from "./partials/NextHeader";
 import NextSider from "./partials/NextSider";
 const { Content } = Layout;
 const Layouts = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("sideberHidden") === "true" ? true : false;
+    }
+    return false;
+  });
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();

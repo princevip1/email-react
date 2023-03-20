@@ -67,10 +67,10 @@ const Login = () => {
     return (
       <div>
         <Head>
-          <title>Login</title>
+          <title>Falcon Dynamic || Login</title>
           <meta
             name="description"
-            content="Viper Digitech is a leading B2B sms service Provider"
+            content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -92,7 +92,7 @@ const Login = () => {
               style={{ marginBottom: 20 }}
               preview={false}
             /> */}
-            <Space
+            {/* <Space
               style={{
                 flexDirection: "column",
                 marginBottom: 20,
@@ -108,12 +108,28 @@ const Login = () => {
               >
                 Welcome back, you’ve been missed!
               </Text>
-            </Space>
+            </Space> */}
             <Card
               className="login-card"
               size="small"
               style={{ padding: 20, width: 400 }}
             >
+              <Space
+                style={{
+                  flexDirection: "column",
+                  width: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  width={150}
+                  src="/logo.png"
+                  alt="logo"
+                  style={{ margin: 10 }}
+                  preview={false}
+                />
+              </Space>
               <Form
                 layout={"vertical"}
                 form={form}

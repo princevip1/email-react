@@ -4,17 +4,19 @@ import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
-  PlusCircleOutlined
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 import {
   Button,
   Card,
   Dropdown,
   Menu,
-  Popconfirm, Table,
+  Popconfirm,
+  Table,
   Tooltip,
-  Typography
+  Typography,
 } from "antd";
+import Head from "next/head";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 
@@ -105,23 +107,34 @@ const Assets = () => {
     },
   ];
   return (
-    <Card
-      title="Assets"
-      extra={
-        <Link href="/asset/add-asset">
-          <Button size="small" icon={<PlusCircleOutlined />} type="primary">
-            Add Asset
-          </Button>
-        </Link>
-      }
-    >
-      <Table
-        loading={isAssetLoading}
-        size={"small"}
-        dataSource={assets}
-        columns={columns}
-      />
-    </Card>
+    <>
+      <Head>
+        <title>Falcon Dynamic || Asset</title>
+        <meta
+          name="description"
+          content="Falcons Dynamic is a dynamic company that is into the business of providing solutions to the problems of the society."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Card
+        title="Assets"
+        extra={
+          <Link href="/asset/add-asset">
+            <Button size="small" icon={<PlusCircleOutlined />} type="primary">
+              Add Asset
+            </Button>
+          </Link>
+        }
+      >
+        <Table
+          loading={isAssetLoading}
+          size={"small"}
+          dataSource={assets}
+          columns={columns}
+        />
+      </Card>
+    </>
   );
 };
 

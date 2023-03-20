@@ -2,7 +2,7 @@ export const API = {
   contact: "/contact",
   smtp: "/smtp",
   addMoreSmtp: "/smtp/addmore",
-  smtpDownload: "/smtp/download",
+  smtpDownload: "/download/smtp",
   proxy: "/proxy",
   asset: "/asset",
   campaign: "/campaign",
