@@ -135,10 +135,7 @@ const Login = () => {
                 form={form}
                 name="basic"
                 onFinish={onFinish}
-                initialValues={{
-                  email: "email@email.com",
-                  password: "12345678",
-                }}
+                
               >
                 <Form.Item
                   label="Email"
