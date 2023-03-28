@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/smtp": "pages/smtp.js",
   "/validator": "pages/validator.js",
-  "/login": "pages/login.js",
   "/contact": "pages/contact.js"
 }

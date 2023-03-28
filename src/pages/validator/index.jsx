@@ -110,6 +110,8 @@ const Validator = () => {
               ? "green"
               : status === "pending"
               ? "orange"
+              : status === "complete"
+              ? "blue"
               : "red"
           }
         >
@@ -298,7 +300,7 @@ const Validator = () => {
               </Col>
               <Col span={24}>
                 <Form.Item
-                  label={"Validation Contacts"}
+                  label={"Validation Contacts (.xlsx file) only"}
                   name="files"
                   rules={[
                     {
@@ -307,7 +309,7 @@ const Validator = () => {
                     },
                   ]}
                 >
-                  <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                  <Dragger {...props} accept={[".xlsx"]}>
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>

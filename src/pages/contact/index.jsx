@@ -211,7 +211,7 @@ const Contact = () => {
               </Col>
               <Col span={24}>
                 <Form.Item
-                  label={"Contacts"}
+                  label={"Contacts (.xlsx File) only"}
                   name="files"
                   rules={[
                     {
@@ -220,7 +220,7 @@ const Contact = () => {
                     },
                   ]}
                 >
-                  <Dragger {...props} accept={[".csv", ".xlsx", ".xls"]}>
+                  <Dragger {...props} accept={[".xlsx"]}>
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>
