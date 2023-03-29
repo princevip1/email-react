@@ -220,7 +220,7 @@ const Contact = () => {
                     },
                   ]}
                 >
-                  <Dragger {...props} accept={[".xlsx"]}>
+                  <Dragger {...props} accept={[".xlsx", ".csv", ".xls"]}>
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>
