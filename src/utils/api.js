@@ -11,4 +11,4 @@ export const API = {
   validator: "/validator",
 };
 
-export const BASE_URL = "https://node1.falcondynamic.com/api/v1";
+export const BASE_URL = "https://email1back.falcondynamic.com/api/v1";
